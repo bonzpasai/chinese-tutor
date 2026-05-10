@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ຄູລິງ | ສອນພາສາຈີນ ຕົວຕໍ່ຕົວ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+Lao:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:     #C0392B;
+      --red-lt:  #E8534A;
+      --red-dim: #FAE8E7;
+      --gray:    #8A8FA3;
+      --gray-lt: #F4F5F7;
+      --ink:     #1E2027;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans Lao', sans-serif;
+      background: #FAFAFA;
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    .font-chinese { font-family: 'Noto Serif SC', serif; }
+
+    /* ─── Decorative SVG pattern ─── */
+    .bg-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C0392B' stroke-width='0.4' opacity='0.15'%3E%3Crect x='10' y='10' width='40' height='40'/%3E%3Crect x='20' y='20' width='20' height='20'/%3E%3Cline x1='10' y1='30' x2='20' y2='30'/%3E%3Cline x1='40' y1='30' x2='50' y2='30'/%3E%3Cline x1='30' y1='10' x2='30' y2='20'/%3E%3Cline x1='30' y1='40' x2='30' y2='50'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .anim-1 { animation: fadeUp .7s ease both; }
+    .anim-2 { animation: fadeUp .7s .15s ease both; }
+    .anim-3 { animation: fadeUp .7s .3s ease both; }
+    .anim-4 { animation: fadeUp .7s .45s ease both; }
+    .anim-scale { animation: scaleIn .8s ease both; }
+
+    /* ─── Red accent bar ─── */
+    .accent-bar::before {
+      content: '';
+      display: block;
+      width: 48px; height: 3px;
+      background: var(--red);
+      margin-bottom: 12px;
+      border-radius: 2px;
+    }
+
+    /* ─── Section heading ─── */
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+    .section-tag::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 2px;
+      background: var(--red);
+      border-radius: 1px;
+    }
+
+    /* ─── Cards ─── */
+    .card {
+      background: #fff;
+      border: 1px solid #E8E9ED;
+      border-radius: 16px;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .card:hover {
+      box-shadow: 0 12px 40px rgba(192,57,43,.10);
+      transform: translateY(-3px);
+    }
+
+    /* ─── Placeholder image ─── */
+    .img-placeholder {
+      background: var(--gray-lt);
+      border: 2px dashed #D4D6DC;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--gray);
+      font-size: .82rem;
+      font-weight: 500;
+      transition: border-color .2s, background .2s;
+    }
+    .img-placeholder:hover {
+      border-color: var(--red);
+      background: var(--red-dim);
+    }
+
+    /* ─── CTA buttons ─── */
+    .btn-red {
+      background: var(--red);
+      color: #fff;
+      border-radius: 50px;
+      padding: .75rem 2rem;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-red:hover {
+      background: var(--red-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(192,57,43,.30);
+    }
+    .btn-outline {
+      border: 2px solid var(--red);
+      color: var(--red);
+      border-radius: 50px;
+      padding: .7rem 1.8rem;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: all .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: var(--red);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ─── Stat badge ─── */
+    .stat-badge {
+      background: var(--red-dim);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+    }
+
+    /* ─── Feature icon circle ─── */
+    .icon-circle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--red-dim);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── Navbar ─── */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(250,250,250,.88);
+      border-bottom: 1px solid #EAEBEE;
+    }
+
+    /* ─── Hero red strip ─── */
+    .hero-strip {
+      position: absolute; top: 0; right: 0;
+      width: 42%; height: 100%;
+      background: linear-gradient(135deg, #C0392B 60%, #E8534A 100%);
+      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    /* ─── Chinese decorative character ─── */
+    .deco-char {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 11rem;
+      line-height: 1;
+      color: rgba(255,255,255,.08);
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #E0E1E6 30%, #E0E1E6 70%, transparent);
+      margin: 0 auto;
+      width: 80%;
+    }
+
+    @media (max-width: 768px) {
+      .hero-strip { width: 100%; height: 220px; clip-path: none; top: auto; bottom: 0; }
+      .deco-char { font-size: 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav>
+  <div class="max-w-5xl mx-auto px-5 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="font-chinese text-xl font-bold" style="color:var(--red);">学</span>
+      <span class="font-semibold text-sm tracking-wide">ຄູລິງ · ສອນຈີນ</span>
+    </div>
+    <a href="#contact" class="btn-red text-sm py-2 px-5">ຕິດຕໍ່ດຽວນີ້</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="relative min-h-screen flex items-center overflow-hidden bg-pattern">
+
+  <!-- Red diagonal strip (desktop) -->
+  <div class="hero-strip hidden md:block">
+    <span class="deco-char" style="bottom:-20px; right:20px;">学</span>
+  </div>
+
+  <!-- Mobile top strip -->
+  <div class="md:hidden absolute top-0 left-0 w-full h-2" style="background:var(--red);"></div>
+
+  <div class="max-w-5xl mx-auto px-6 py-24 md:py-0 relative z-10 w-full">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT: text -->
+      <div>
+        <p class="section-tag anim-1">ຄູສອນພາສາຈີນ</p>
+        <h1 class="anim-2 text-5xl md:text-6xl font-bold leading-tight mb-2">
+          ຄູລິງ<br/>
+          <span class="font-chinese" style="color:var(--red); font-size:.85em;">玲老师</span>
+        </h1>
+        <p class="anim-3 text-lg md:text-xl font-light mt-4 mb-3 leading-relaxed" style="color:#444;">
+          ຮຽນຈີນງ່າຍໆ ສໄຕລ໌ຕົວຕໍ່ຕົວ<br/>
+          <span class="font-light text-base" style="color:var(--gray);">ເຂົ້າໃຈຈິງ · ໃຊ້ໄດ້ຈິງ · ມ່ວນຈິງ</span>
+        </p>
+        <p class="anim-3 font-chinese text-base mb-8" style="color:var(--gray);">中文学习·轻松有趣</p>
+
+        <div class="anim-4 flex flex-wrap gap-3">
+          <a href="#contact" class="btn-red">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"/></svg>
+            ນັດຮຽນທົດລອງຟຣີ
+          </a>
+          <a href="#courses" class="btn-outline">ເບິ່ງຄອສຮຽນ</a>
+        </div>
+
+        <!-- Stats row -->
+        <div class="anim-4 flex gap-4 mt-10">
+          <div class="stat-badge flex-1">
+            <p class="text-2xl font-bold" style="color:var(--red);">8+</p>
+            <p class="text-xs mt-1" style="color:var(--gray);">ປີປະສົບການ</p>
+          </div>
+          <div class="stat-badge flex-1">
+            <p class="text-2xl font-bold" style="color:var(--red);">200+</p>
+            <p class="text-xs mt-1" style="color:var(--gray);">ນັກຮຽນທີ່ຜ່ານມາ</p>
+          </div>
+          <div class="stat-badge flex-1">
+            <p class="text-2xl font-bold" style="color:var(--red);">1:1</p>
+            <p class="text-xs mt-1" style="color:var(--gray);">ຮຽນຕົວຕໍ່ຕົວ</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Photo placeholder -->
+      <div class="anim-scale flex flex-col gap-4 md:pl-8">
+        <div class="img-placeholder w-full" style="height:340px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span>ວາງຮູບຄູທີ່ນີ້</span>
+          <span class="text-xs opacity-60">ແນະນຳຂະໜາດ 600 × 700 px</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider my-0"></div>
+
+<!-- ══════════════ EXPERIENCE ══════════════ -->
+<section id="about" class="py-20 px-6 max-w-5xl mx-auto">
+  <div class="grid md:grid-cols-2 gap-14 items-center">
+
+    <!-- Photo -->
+    <div class="order-2 md:order-1 flex flex-col gap-3">
+      <div class="img-placeholder" style="height:280px;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span>ຮູບພາບຂະນະສອນ</span>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="img-placeholder" style="height:120px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span class="text-xs">ບັນຍາກາດຫ້ອງຮຽນ</span>
+        </div>
+        <div class="img-placeholder" style="height:120px;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span class="text-xs">ສື່ການສອນ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="order-1 md:order-2">
+      <p class="section-tag">ປະສົບການ &amp; ປະຫວັດ</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-5 leading-snug accent-bar">
+        ຄູທີ່ເຂົ້າໃຈ<br/>ພາສາຈີນຢ່າງເລິກເຊິ່ງ
+      </h2>
+      <p class="leading-relaxed text-base mb-4" style="color:#555;">
+        ຄູລິງສຳເລັດການສຶກສາລະດັບປະລິນຍາຕີ ສາຂາພາສາຈີນ ແລະ ການສື່ສານ ແລະ ມີປະສົບການສອນພາສາຈີນຫຼາຍກວ່າ <strong>8 ປີ</strong> ທັງໃນໂຮງຮຽນ ສະຖາບັນກວດວິຊາ ແລະ ສອນຕົວຕໍ່ຕົວແບບ Private
+      </p>
+      <p class="leading-relaxed text-base mb-6" style="color:#555;">
+        ມີຄວາມຊ່ຽວຊານໃນການສອນຕັ້ງແຕ່ລະດັບເລີ່ມຕົ້ນ (HSK 1–2) ຈົນຮອດຂັ້ນສົນທະນາ ອ່ານ ແລະ ຂຽນ ແລະ ກຽມສອບ HSK 4–5 ໂດຍປັບວິທີການສອນໃຫ້ເໝາະສົມກັບຜູ້ຮຽນແຕ່ລະຄົນ
+      </p>
+
+      <!-- Checkmarks -->
+      <ul class="space-y-3">
+        <li class="flex items-center gap-3 text-sm font-medium">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--red);">
+            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </span>
+          ວຸດທິການສຶກສາ ປ.ຕ. ສາຂາພາສາຈີນ
+        </li>
+        <li class="flex items-center gap-3 text-sm font-medium">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--red);">
+            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </span>
+          ຜ່ານການທົດສອບ HSK ລະດັບ 5 (ຂັ້ນສູງ)
+        </li>
+        <li class="flex items-center gap-3 text-sm font-medium">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--red);">
+            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </span>
+          ປະສົບການສອນນັກຮຽນທຸກຊ່ວງອາຍຸ ຕັ້ງແຕ່ ປ.1 – ຜູ້ໃຫຍ່
+        </li>
+        <li class="flex items-center gap-3 text-sm font-medium">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--red);">
+            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+          </span>
+          ເນັ້ນສ້າງບັນຍາກາດມ່ວນ ບໍ່ກົດດັນ ຮຽນໄດ້ຜົນຈິງ
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ COURSES ══════════════ -->
+<section id="courses" class="py-20 px-6 max-w-5xl mx-auto">
+  <div class="text-center mb-12">
+    <p class="section-tag justify-center">ຮູບແບບການຮຽນ</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">ຄອສທີ່ເປີດສອນ</h2>
+    <p class="text-base" style="color:var(--gray);">ຮັບສອນແບບ <strong>Part-time · ຕົວຕໍ່ຕົວເທົ່ານັ້ນ</strong> ເພື່ອໃຫ້ໄດ້ຮັບຄວາມໃສ່ໃຈຢ່າງເຕັມທີ່</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- Card 1 -->
+    <div class="card p-6">
+      <div class="icon-circle mb-4">
+        <svg class="w-6 h-6" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+      </div>
+      <p class="font-chinese text-xs mb-1" style="color:var(--red);">初级</p>
+      <h3 class="text-lg font-bold mb-2">ລະດັບເລີ່ມຕົ້ນ</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--gray);">ຮຽນ Pinyin ອອກສຽງ ອັກສອນພື້ນຖານ ແລະ ປະໂຫຍກງ່າຍໆ ໃນຊີວິດປະຈຳວັນ ເໝາະສຳລັບຜູ້ທີ່ບໍ່ມີພື້ນຖານເລີຍ</p>
+      <div class="text-xs font-semibold px-3 py-1 rounded-full inline-block" style="background:var(--red-dim); color:var(--red);">HSK 1–2</div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card p-6 relative overflow-hidden" style="border-color: var(--red);">
+      <div class="absolute top-3 right-3 text-xs font-bold px-2 py-0.5 rounded-full text-white" style="background:var(--red);">ແນະນຳ</div>
+      <div class="icon-circle mb-4">
+        <svg class="w-6 h-6" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      </div>
+      <p class="font-chinese text-xs mb-1" style="color:var(--red);">中级</p>
+      <h3 class="text-lg font-bold mb-2">ລະດັບສົນທະນາ</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--gray);">ຝຶກການສົນທະນາຈິງ ອ່ານ ແລະ ຂຽນປະໂຫຍກທີ່ຊັບຊ້ອນ ເໝາະສຳລັບຜູ້ທີ່ມີພື້ນຖານ ແລະ ຕ້ອງການໃຊ້ໄດ້ຈິງ</p>
+      <div class="text-xs font-semibold px-3 py-1 rounded-full inline-block" style="background:var(--red-dim); color:var(--red);">HSK 3–4</div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card p-6">
+      <div class="icon-circle mb-4">
+        <svg class="w-6 h-6" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+      </div>
+      <p class="font-chinese text-xs mb-1" style="color:var(--red);">高级</p>
+      <h3 class="text-lg font-bold mb-2">ກຽມສອບ HSK</h3>
+      <p class="text-sm leading-relaxed mb-4" style="color:var(--gray);">ອອກແບບເນື້ອຫາສະເພາະສຳລັບການສອບ ວິເຄາະຂໍ້ສອບເກົ່າ ຝຶກ Mock Test ພ້ອມຄຳແນະນຳສະເພາະ</p>
+      <div class="text-xs font-semibold px-3 py-1 rounded-full inline-block" style="background:var(--red-dim); color:var(--red);">HSK 4–5</div>
+    </div>
+
+  </div>
+
+  <!-- Time info -->
+  <div class="mt-10 rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center" style="background:var(--gray-lt);">
+    <div class="flex items-center gap-4 flex-1">
+      <div class="icon-circle">
+        <svg class="w-5 h-5" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div>
+        <p class="font-semibold text-sm">ເວລາທີ່ຮັບສອນ</p>
+        <p class="text-sm" style="color:var(--gray);">ຈ–ສ : 16.00–20.00 ໂມງ · ເສົາ–ອາທິດ : ທັງວັນ</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 flex-1">
+      <div class="icon-circle">
+        <svg class="w-5 h-5" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div>
+        <p class="font-semibold text-sm">ຮູບແບບ</p>
+        <p class="text-sm" style="color:var(--gray);">ຕົວຕໍ່ຕົວເທົ່ານັ້ນ · ອາທິດລະ 2–3 ຄັ້ງ · ຄັ້ງລະ 1–1.5 ຊົ່ວໂມງ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ LOCATION ══════════════ -->
+<section id="location" class="py-20 px-6 max-w-5xl mx-auto">
+  <div class="text-center mb-12">
+    <p class="section-tag justify-center">ສະຖານທີ່ຮຽນ</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">ບັນຍາກາດສະບາຍໆ ສ່ວນຕົວ</h2>
+    <p class="text-base" style="color:var(--gray);">ຮຽນໃນສະພາບແວດລ້ອມທີ່ຜ່ອນຄາຍ ຄືຄົນນັ່ງຮຽນຢູ່ເຮືອນ</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-8 items-center">
+
+    <!-- Map placeholder -->
+    <div>
+      <div class="img-placeholder rounded-2xl" style="height:260px;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <span>ແຜນທີ່ / ຮູບສະຖານທີ່</span>
+        <span class="text-xs opacity-60">ວາງຮູບ ຫຼື Google Maps Embed ທີ່ນີ້</span>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="space-y-5">
+      <div class="card p-5 flex gap-4 items-start">
+        <div class="icon-circle flex-shrink-0">
+          <svg class="w-5 h-5" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm mb-1">ເຮືອນຄູ / ຫ້ອງຄູ</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--gray);">ຮຽນທີ່ເຮືອນ ຫຼື ຫ້ອງເຊົ່າຂອງຄູລິງ ບັນຍາກາດອົບອຸ່ນ ເປັນກັນເອງ ຫ້ອງຮຽນງຽບສະຫງົບ ມີອຸປະກອນຄົບ</p>
+          <p class="text-sm font-semibold mt-2" style="color:var(--red);">📍 ບ້ານ/ເມືອງ [ລະບຸພື້ນທີ່ຂອງທ່ານ]</p>
+        </div>
+      </div>
+      <div class="card p-5 flex gap-4 items-start">
+        <div class="icon-circle flex-shrink-0">
+          <svg class="w-5 h-5" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.14 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm mb-1">ສະດວກ ບໍ່ຕ້ອງເດີນທາງໄກ</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--gray);">ໃກ້ [ສະຖານີ / ຫ້າງໃກ້ຄຽງ] ເດີນທາງສະດວກ ມີທີ່ຈອດລົດ</p>
+        </div>
+      </div>
+      <div class="card p-5 flex gap-4 items-start">
+        <div class="icon-circle flex-shrink-0">
+          <svg class="w-5 h-5" style="color:var(--red);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        </div>
+        <div>
+          <h4 class="font-bold text-sm mb-1">ມີສື່ ແລະ ອຸປະກອນຄົບ</h4>
+          <p class="text-sm leading-relaxed" style="color:var(--gray);">ໜັງສືຮຽນ ແບບຝຶກຫັດ ໄວທ໌ບອດ ແລະ ສື່ມຸນລະທິ ພ້ອມສຳລັບການຮຽນເຕັມຮູບແບບ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact" class="py-24 px-6 relative overflow-hidden" style="background:var(--ink);">
+  <!-- Decorative Chinese characters -->
+  <span class="deco-char absolute -top-4 -left-6 opacity-5 text-white" style="font-size:14rem; color:white;">学</span>
+  <span class="deco-char absolute -bottom-8 right-0 opacity-5 text-white" style="font-size:14rem; color:white;">语</span>
+
+  <div class="max-w-xl mx-auto text-center relative z-10">
+    <p class="section-tag justify-center" style="color:var(--red);">ຕິດຕໍ່ຄູລິງ</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3 text-white">ເລີ່ມຮຽນ<br/>ພາສາຈີນມື້ນີ້</h2>
+    <p class="mb-3" style="color:rgba(255,255,255,.55);">ທົດລອງຮຽນຟຣີ 1 ຊົ່ວໂມງທຳອິດ · ບໍ່ມີຂໍ້ຜູກມັດ</p>
+    <p class="font-chinese text-base mb-10" style="color:var(--red);">免费试课·欢迎联系</p>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+      <!-- Phone -->
+      <a href="tel:+66812345678" class="btn-red text-base px-7 py-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z"/>
+        </svg>
+        ໂທ 081-234-5678
+      </a>
+
+      <!-- LINE -->
+      <a href="https://line.me/ti/p/~yourlineid" target="_blank" rel="noopener" class="btn-outline text-base px-7 py-4" style="border-color:#00B900; color:#00B900;">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+        </svg>
+        LINE: @kruling
+      </a>
+    </div>
+
+    <p class="mt-8 text-xs" style="color:rgba(255,255,255,.35);">ຕອບກັບທຸກວັນ · ພາຍໃນ 1 ຊົ່ວໂມງ</p>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="text-center py-5 text-xs" style="background:#111; color:rgba(255,255,255,.3);">
+  © 2025 ຄູລິງ · ສອນພາສາຈີນ ຕົວຕໍ່ຕົວ &nbsp;|&nbsp;
+  <span class="font-chinese" style="color:rgba(192,57,43,.6);">学而不思则罔</span>
+</footer>
+
+<!-- Scroll-reveal script -->
+<script>
+  const obs2 = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs2.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(20px)';
+    s.style.transition = 'opacity .65s ease, transform .65s ease';
+    obs2.observe(s);
+  });
+</script>
+</body>
+</html>
